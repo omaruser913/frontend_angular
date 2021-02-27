@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Visualización de usuarios</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="text-center">
+                        
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <!--<th>Estatus</th>                    -->
+                    </tr>
+                </thead>
+                <tbody>                    
+                    <tr  *ngFor="let usuario of datosTabla" class="text-center">
+                        
+                        <td>{{usuario.nombre}}</td>
+                        <td>{{usuario.apellidoPaterno}}</td>                        
+                        <td>{{usuario.apellidoMaterno}}</td>
+                        <!--<td>{{usuario.telefono}}</td>-->
+                        <td>                            
+                            <button class="btn btn-warning" [routerLink]="['/editar/',usuario.id]">Ver</button>
+                            <button class="btn btn-danger" (click)="deleteRegistro(usuario.id.toString())" style="margin-left: 10px;">Borrar</button>                          
+                        </td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+    </div>
+</div>

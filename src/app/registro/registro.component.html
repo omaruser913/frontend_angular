@@ -1,0 +1,154 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-content">
+            <h2>Registro de usuarios</h2>
+            <hr>
+            <form class="needs-validation" action="" #formContacto="ngForm" (ngSubmit)="addRegistro(formContacto)">
+                <!--primer-row-->
+                <div class="row">
+                    <div class="col">
+                        <label for="nombre">*Nombre:</label><br>
+                        <input placeholder="nombre" class="form-control" type="text" name="nombre" id=""
+                            #nombre="ngModel" [(ngModel)]="usuario.nombre" required pattern="[a-zA-Z]+">
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="nombre.touched && !nombre.valid" style="color:red;">
+                            Campo obligatorio
+                        </span>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <label for="apellidoPaterno">*Apellido Paterno:</label><br>
+                        <input placeholder="apellido paterno" class="form-control" type="text" name="apellidoPaterno"
+                            id="" #apellidoPaterno="ngModel" [(ngModel)]="usuario.apellidoPaterno" required
+                            pattern="[a-zA-Z]+">
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="apellidoPaterno.touched && !apellidoPaterno.valid" style="color:red;">
+                            Campo obligatorio
+                        </span>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <label for="apellidoMaterno">Apellido Materno:</label><br>
+                        <input placeholder="apellido materno" class="form-control" type="text" name="apellidoMaterno"
+                            id="" #apellidoMaterno="ngModel" [(ngModel)]="usuario.apellidoMaterno">
+                        <br>
+                    </div>
+                </div>
+                <!--segundo-row-->
+                <div class="row">
+                    <div class="col">
+                        <label for="calle">*Calle:</label><br>
+                        <input placeholder="calle" class="form-control" type="text" name="calle" id="" #calle="ngModel"
+                            [(ngModel)]="usuario.calle" required pattern="[a-zA-Z]+">
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="calle.touched && !calle.valid" style="color:red;">
+                            Campo obligatorio
+                        </span>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <label for="numero">*Numero:</label><br>
+                        <input placeholder="numero" class="form-control" type="text" name="numero" id=""
+                            #numero="ngModel" [(ngModel)]="usuario.numero" required pattern="[0-9]{3}">
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="numero.touched && !numero.valid" style="color:red;">
+                            Vacio/Solo numeros
+                        </span>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <label for="colonia">*Colonia:</label><br>
+                        <input placeholder="colonia" class="form-control" type="text" name="colonia" id=""
+                            #colonia="ngModel" [(ngModel)]="usuario.colonia" required>
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="colonia.touched && !colonia.valid" style="color:red;">
+                            Campo obligatorio
+                        </span>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <label for="codigoPostal">*Codigo Postal:</label><br>
+                        <input placeholder="codigo postal" class="form-control" type="text" name="codigoPostal" id=""
+                            #codigoPostal="ngModel" [(ngModel)]="usuario.codigoPostal" required pattern="[0-9]{5}">
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="codigoPostal.touched && !codigoPostal.valid" style="color:red;">
+                            Vacio/solo numeros
+                        </span>
+                        <br>
+                    </div>
+                </div>
+                <!--tercer-row-->
+                <div class="row">
+                    <div class="col">
+                        <label for="telefono">*Telefono:</label><br>
+                        <input placeholder="telefono" class="form-control" type="text" name="telefono" id=""
+                            #telefono="ngModel" [(ngModel)]="usuario.telefono" required pattern="[0-9]{9}">
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="telefono.touched && !telefono.valid" style="color:red;">
+                            Vacion/solo numeros
+                        </span>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <label for="rfc">*RFC:</label><br>
+                        <input placeholder="rfc" class="form-control" type="text" name="rfc" id="" #rfc="ngModel"
+                            [(ngModel)]="usuario.rfc" required>
+                        <!--Validaciones del formulario-->
+                        <span *ngIf="rfc.touched && !rfc.valid" style="color:red;">
+                            Campo obligatorio
+                        </span>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <input type="file" class="form-control" id="input-custom-file" (change)="onFileChange($event)">
+                    </div>
+                </div>
+                <input type="number" value="{{this.dato}}" id="" name="estatus" #estatus="ngModel"
+                    [(ngModel)]="usuario.estatus" style="visibility: hidden;">
+                <br>
+            </form>
+            <div *ngIf="!bandera">
+                <button class="btn btn-outline-primary" type="submit" value="Agregar" (click)="openInsert(content)"
+                    [disabled]="action != 'insert'">Enviar</button>
+            </div>
+            <div *ngIf="action == 'insert'">
+                <button class="btn btn-outline-primary" (click)="open(content)"style="visibility: hidden;">Salir</button>
+            </div>
+
+            <!--[disabled]="!formContacto.form.valid"-->
+
+            <div *ngIf="action == 'update'">
+                <button class="btn btn-info" [routerLink]="['/tabla']"
+                    [routerLinkActive]="['activate']">Regresar</button>
+            </div>
+
+            <!--modal salir-->
+            <ng-template #content let-c="close" let-d="dismiss">
+                <div class="modal-header" style="background:green;">
+                    <h4 *ngIF="!bandera" class="modal-title" id="modal-basic-title">ADVERTENCIA</h4>
+                    <h4 *ngIf="action == 'insert'" class="modal-title" id="modal-basic-title">ESTATUS</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div *ngIf="" class="modal-body">
+                    <p>Perdera toda su informacion!!</p>
+                </div>
+                <div *ngIf="action == 'insert'" class="modal-body">
+                    <p>Seleccione el status</p>
+                    <div class="container">
+                        <button class="btn btn-success" (click)="getObtenerDato()">Autorizar</button>
+                        <button class="btn btn-danger" style="margin-left: 10px"
+                            (click)="getSegundoDato()">Rechazar</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" (click)="cerrar(formContacto)">Salir</button>
+                    <button type="button" class="btn btn-outline-success"
+                        (click)="addRegistro(formContacto)">Continuar</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
